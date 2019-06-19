@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+<script src="https://unpkg.com/contentful-ui-extensions-sdk@3"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.3/ace.js"></script>
+    <style type="text/css" media="screen">
+    #editor { 
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+    }
+</style>
+  </head>
+<body>
+<div id="editor"></div>
+<script>
+window.contentfulExtension.init(function(api) {
+  var val=api.field.getValue();
+  var editor = ace.edit("editor");
+  editor.setTheme("ace/theme/monokai");
+  editor.session.setMode("ace/mode/"+api.parameters.instance.mode);//razor, csharp, css, ...
+  if(val!=undefined)  editor.setValue(val,-1);
+  editor.on("blur", function(){   api.field.setValue(editor.getValue());    });
+  api.window.updateHeight(500);
+});
+</script>
+</body>
+</html>
